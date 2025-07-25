@@ -10,9 +10,20 @@
     <div class="container">
         <h2>Welcome to the Student Dashboard</h2>
         <p>Hello, {{ user_name }}!</p>
+<h3>Your Assignments</h3>
+<ul>
+    {% for assignment in assignments %}
+        <li>
+            <strong>{{ assignment.title }}</strong> - Due: {{ assignment.due_date }}<br>
+            {{ assignment.description }}
+        </li>
+    {% else %}
+        <li>No assignments posted yet.</li>
+    {% endfor %}
+</ul>        
 
         
     </div>
-    <a href="/logout" class="btn btn-danger">Logout</a>
+    <a href="/logout" class="btn btn-danger end">Logout</a>
 </body>
 </html>

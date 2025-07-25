@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System logs</title>
+</head>
+<body>
+    <link rel="stylesheet" href="../static/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/dist/css/style.css">
+    <div class="container">
+                <!-- 🔍 FILTER BAR -->
+        <input type="text" class="form-control" id="logSearch" placeholder="Filter by level, user or endpoint...">
+        <br>
+        <!-- 📋 LOG TABLE -->
+
+        <h2 class="text-center text-info">System Logs</h2>
+        <table class="table table-bordered table-striped mt-4">
+            <thead>
+                <tr>
+                    <th>Log Level</th>
+                    <th>Log Message</th>
+                    <th>Log Time</th>
+                    <th>Endpoint</th>
+                    <th>User ID</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for log in logs %}
+                    <tr>
+                        <td>{{ log[1] }}</td> <!-- _level -->
+                        <td>{{ log[3] }}</td> <!-- log_message -->
+                        <td>{{ log[2] }}</td> <!-- log_time -->
+                        <td>{{ log[4] }}</td> <!-- endpoint -->
+                        <td>{{ log[5] }}</td> <!-- user_id -->
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{{ url_for('admin_dashboard') }}" class="btn btn-secondary">Back</a>
+
+            <!-- 💡 JavaScript for filtering -->
+<script>
+    document.getElementById("logSearch").addEventListener("input", function () {
+        let input = this.value.toLowerCase();
+        let entries = document.querySelectorAll(".log-entry");
+
+        entries.forEach(function (entry) {
+            if (entry.textContent.toLowerCase().includes(input)) {
+                entry.style.display = "block";
+            } else {
+                entry.style.display = "none";
+            }
+        });
+    });
+</script>
+
+    </div>
+
+
+</body>
+</html>
