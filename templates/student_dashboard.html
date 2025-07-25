@@ -7,23 +7,42 @@
     <title>Student Dashboard</title>
 </head>
 <body>
-    <div class="container">
-        <h2>Welcome to the Student Dashboard</h2>
-        <p>Hello, {{ user_name }}!</p>
-<h3>Your Assignments</h3>
-<ul>
-    {% for assignment in assignments %}
-        <li>
-            <strong>{{ assignment.title }}</strong> - Due: {{ assignment.due_date }}<br>
-            {{ assignment.description }}
-        </li>
-    {% else %}
-        <li>No assignments posted yet.</li>
-    {% endfor %}
-</ul>        
+    <div class="container mt-4">
+        <h2 class="mb-3">Welcome to the Student Dashboard</h2>
+        <p>Hello , {{ name }}!</p>
 
-        
+        <h5 class="mt-4">Your Recent Assignments</h5>
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Assignment Title</th>
+                    <th>Description</th>
+                    <th>Due Date</th>
+                    <th>Posted At</th>
+                    <th>Attachment_URL</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for assignments in assignments %}
+                <tr>
+                    <td>{{ assignments[0] }}</td>
+                    <td>{{ assignments[1] }}</td>
+                    <td>{{ assignments[2] }}</td>
+                    <td>{{ assignments[3] }}</td>
+                    <td>
+                        {% if assignments[5] %}
+                            <a href="{{ assignments[5] }}" target="_blank">📎 View</a>
+                        {% else %}
+                            <span class="text-muted">None</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="/logout" class="btn btn-danger mt-3">Logout</a>
     </div>
-    <a href="/logout" class="btn btn-danger end">Logout</a>
+     
 </body>
 </html>

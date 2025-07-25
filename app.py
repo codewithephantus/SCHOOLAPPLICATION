@@ -1,5 +1,5 @@
+# imports 
 from flask import *
-
 import pymysql
 
 # import the functions for hashing passwords and verifying the same
@@ -92,7 +92,7 @@ def login():
         # if the details are correct, put them into a users variable
         user = cursor.fetchone()
 
-        print(user)
+        # print(user) 
 
         if user:
             db_password = user[2]
@@ -140,9 +140,16 @@ def student_assignments():
         connection = pymysql.connect(host="localhost", user="root", password="", database="school_db")
         cursor = connection.cursor()
         # Get assignments for the logged-in student
-        cursor.execute("SELECT title, description, due_date, posted_at FROM assignments ORDER BY posted_at DESC")
-        assignment = cursor.fetchall()
-        return render_template('student_dashboard.html', name=session.get("user_name"), assignment=assignment)
+        cursor.execute("SELECT * FROM assignments")
+        assignments = cursor.fetchall()
+        # print(assignments)
+        print("\n===== DEBUG: ASSIGNMENTS FETCHED =====")
+        print(assignments)
+        print("=======================================\n")
+
+
+        return render_template("student_dashboard.html", name=session.get("user_name"), assignments=assignments)
+
     return redirect(url_for("login"))
 
 
@@ -287,7 +294,7 @@ def create_assignment():
         cursor.execute("SELECT user_id FROM users WHERE email=%s", (teacher_email,))
         teacher = cursor.fetchone()
 
-        print(teacher)
+        # print(teacher) 
 
         if teacher:
             teacher_id = teacher[0]
@@ -318,6 +325,20 @@ def logs():
     logs = cursor.fetchall()
 
     return render_template("logs.html", logs=logs)
+
+
+# delete logs     
+@app.route("/admin/log/<int:log_id>/delete")
+def delete_log(log_id):
+    if session.get("user_role") == "admin":
+        # establish a connection to the db
+        connection = pymysql.connect(host="localhost", user="root", password="", database="school_db")
+        cursor = connection.cursor()
+        sql = "delete from logs where log_id=%s"
+        cursor.execute(sql, (log_id,))
+        connection.commit()
+        return redirect(url_for('admin_dashboard'))
+    return redirect(url_for("login"))
 
 
 # logout Route
