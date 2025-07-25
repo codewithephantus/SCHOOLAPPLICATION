@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/dist/css/bootstrap.css">
+    <script src="../static/dist/js/bootstrap.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <h3 class="text-center text-info">Login Page</h3><br><br>
+    <div class="mt-2 d-flex justify-content-center">
+       <div class="col-md-4">
+
+           <div class="card shadow p-4">
+               <form action="/login" method="POST">
+                   <h4 class="text-center text-success">{{message}}</h4> <br>
+    
+                   <label for="email">Email Address:</label>
+                   <input type="text" id="email" name="email" placeholder="enter your email Address....." required class="form-control"> <br>
+    
+                   <label for="password">Password:</label>
+                   <input type="password" id="password" name="password" placeholder="enter your password....." class="form-control"> <br>
+    
+                   <button type="submit" value="login" class="btn btn-success">Login</button> <br>
+    
+                   <p>Don't have an account? <a href="/register" class="text-success">Register here</a></p>
+    
+               </form>
+    
+           </div>
+       </div>
+
+    </div>
+
+    
+</body>
+</html>

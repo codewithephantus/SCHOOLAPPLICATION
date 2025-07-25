@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/dist/css/bootstrap.css">
+    <script src="../static/dist/js/bootstrap.js"></script>
+    <title>register</title>
+</head>
+<body>
+    <!-- require "full name, role(does not appear on the html form), phone number, email address, password"  -->
+    <h3 class="text-info text-center">Welcome to the Registration page</h3> <br>
+    <div class="row justify-content-center ">
+        <div class="col-md-4" > 
+        <div class="card shadow  p-4">
+            <h4 class="text-center text-success">{{message}}</h4> <br>
+
+                <form action="/register" method="POST">
+                <br>
+                <label for="Full Name">Full Name:</label>
+                <input type="text" name="full_name" id="full_name" placeholder="enter your full name....." required class="form-control">
+                <br>
+                <label for="email">Email:</label>
+                <input type="email" name="email" id="email" placeholder="enter your email....." required class="form-control">
+                <br>
+                <label for="password">Password:</label>
+                <input type="password" name="password" id="password" placeholder="enter a password....." required class="form-control">
+                <br>
+                <label for="phone">Phone Number:</label>
+                <input type="tel" name="phone" id="phone" placeholder="enter your phone number....." required class="form-control">
+                <br>
+                <button type="submit" class="btn btn-success">Register</button>
+                <p>Already have an account? <a href="/login" class="text-success">Login here</a></p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
