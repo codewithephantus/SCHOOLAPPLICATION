@@ -142,15 +142,26 @@ def student_assignments():
         # Get assignments for the logged-in student
         cursor.execute("SELECT * FROM assignments")
         assignments = cursor.fetchall()
-        # print(assignments)
-        print("\n===== DEBUG: ASSIGNMENTS FETCHED =====")
-        print(assignments)
-        print("=======================================\n")
+
+            # get the current STUDENT id
+    cursor.execute("select user_id from users where email=%s", (session.get("user_email"),))
+    student = cursor.fetchone()
+
+    if not student:
+        return "Student not Found"
+    
+    student_id = student[0]
+
+    # Fetch assignments for the student (example: all assignments, or filter as needed)
+    cursor.execute("SELECT * FROM assignments ORDER BY posted_at DESC")
+    assignments = cursor.fetchall()
+
+    return render_template("student_dashboard.html", name=session.get("user_name"), assignments=assignments)
 
 
-        return render_template("student_dashboard.html", name=session.get("user_name"), assignments=assignments)
+    #     return render_template("student_dashboard.html", name=session.get("user_name"), assignments=assignments)
 
-    return redirect(url_for("login"))
+    # return redirect(url_for("login"))
 
 
 
