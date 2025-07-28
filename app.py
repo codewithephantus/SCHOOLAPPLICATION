@@ -1,3 +1,29 @@
+
+# Password strength checker with detailed feedback
+import re
+def check_password_strength(password):
+    if len(password) < 8:
+        return "Must be eight characters"
+    elif not re.search("[a-z]", password):
+        return "Must have at least one small letter"
+    elif not re.search("[A-Z]", password):
+        return "Must have at least one capital letter"
+    elif not re.search("[0-9]", password):
+        return "Must have at least one number"
+    elif not re.search("[_@#$]", password):
+        return "Must have at least one symbol (_@#$)"
+    else:
+        common_patterns = [
+            r'(?i)password',
+            r'(?i)123456',
+            r'(?i)qwerty',
+            r'(?i)admin',
+            r'(?i)root',
+        ]
+        for pattern in common_patterns:
+            if re.search(pattern, password):
+                return "Password too Simple"
+        return "Password Correct - Strong Password"
 # imports 
 from flask import *
 import pymysql
@@ -35,12 +61,19 @@ def register():
     log_to_db("INFO", "Accessed register route", session.get("user_id"), "/register")
     if request.method == "GET":
         return render_template("register.html")
+
     else:
         full_name = request.form["full_name"]
         email = request.form['email']
         phone = request.form["phone"]
         password = request.form['password']
         role = "student"
+
+        # Check password strength with feedback
+        password_feedback = check_password_strength(password)
+        if password_feedback != "Password Correct - Strong Password":
+            log_to_db("WARNING", password_feedback, None, "/register")
+            return render_template("register.html", message=password_feedback)
 
         # establish a connection to the db
         connection = pymysql.connect(host="localhost", user="root", password="", database="school_db")
@@ -50,7 +83,6 @@ def register():
 
         # structure the sql query for insert
         sql = "INSERT INTO users(full_name, email, phone, password, role) values(%s, %s, %s, %s, %s)"
-
 
         # put the data into a tuple
         data = (full_name, email, phone, functions.hash_password_salt(password), role)

@@ -52,4 +52,18 @@
       
     </div>
   </body>
+<script>
+// Auto-logout after 30 seconds of inactivity
+let logoutTimer;
+function resetLogoutTimer() {
+    clearTimeout(logoutTimer);
+    logoutTimer = setTimeout(function() {
+        window.location.href = '/logout';
+    }, 30000); // 30 seconds
+}
+['mousemove', 'keydown', 'mousedown', 'touchstart'].forEach(function(event) {
+    document.addEventListener(event, resetLogoutTimer);
+});
+resetLogoutTimer();
+</script>
 </html>

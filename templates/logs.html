@@ -1,22 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
+<head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>System logs</title>
 </head>
-<a href="{{ url_for('admin_dashboard') }}" class="btn btn-secondary">Back</a>
 <body>
     <link rel="stylesheet" href="../static/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="../static/dist/css/style.css">
     <div class="container">
         <!-- 📋 LOG TABLE -->
-        <a href="{{ url_for('delete_log', log_id=log[0]) }}" class="btn btn-sm btn-danger">Delete</a>
         
         <h2 class="text-center text-info">System Logs</h2>
         <!-- 🔍 FILTER BAR -->
         <input type="text" class="form-control" id="logSearch" placeholder="Filter by level, user or endpoint...">
         <br>
+        <a href="{{ url_for('admin_dashboard') }}" class="btn btn-secondary">Back</a>
         <table class="table table-bordered table-striped mt-4">
             <thead>
                 <tr>
@@ -37,6 +36,7 @@
                         <td>{{ log[4] }}</td> <!-- endpoint -->
                         <td>{{ log[5] }}</td> <!-- user_id -->
                         <td>
+                            <a href="{{ url_for('delete_log', log_id=log[0]) }}" class="btn btn-sm btn-danger">Delete</a>
                         </td>
                     </tr>
                 {% endfor %}
