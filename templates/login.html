@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/dist/css/bootstrap.css">
     <script src="../static/dist/js/bootstrap.js"></script>
+        <!-- reCAPTCHA API Script -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
     <title>Document</title>
 </head>
 <body>
@@ -21,6 +24,11 @@
     
                    <label for="password">Password:</label>
                    <input type="password" id="password" name="password" placeholder="enter your password....." class="form-control"> <br>
+
+                               <!-- Google reCAPTCHA widget -->
+            <div class="g-recaptcha" data-sitekey="6Le-mmIrAAAAAEs3CZ8EwA-x_L8nYkA7LJz2Li3o"></div>
+            <br>
+                    
     
                    <button type="submit" value="login" class="btn btn-success">Login</button> <br>
     

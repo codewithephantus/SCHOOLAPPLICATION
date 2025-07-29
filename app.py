@@ -109,6 +109,21 @@ def login():
         email = request.form["email"]
         password = request.form["password"]
 
+        # Google reCAPTCHA
+        recaptcha_response = request.form.get('g-recaptcha-response')
+        secret_key = '6Le-mmIrAAAAAGu7wReDTVpvtFBPzGO2AqPtZMHL'
+        verify_url = "https://www.google.com/recaptcha/api/siteverify"
+        import requests
+        res = requests.post(verify_url, data={
+            'secret': secret_key,
+            'response': recaptcha_response
+        })
+        result = res.json()
+        if not result.get('success'):
+            log_to_db('ERROR', f'Failed login for {email} - reCAPTCHA failed', endpoint='/login', user_id=None)
+            return render_template('login.html', message='reCAPTCHA failed. Try again.')
+
+
          # establish a connection to the db
         connection = pymysql.connect(host="localhost", user="root", password="", database="school_db")
 
@@ -193,7 +208,7 @@ def student_assignments():
 
     #     return render_template("student_dashboard.html", name=session.get("user_name"), assignments=assignments)
 
-    # return redirect(url_for("login"))
+    return redirect(url_for("login"))
 
 
 
